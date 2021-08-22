@@ -9,7 +9,10 @@
   },
   "author": "Alexander Ward",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "apollo-server": "^3.1.2",
+    "graphql": "^15.5.1"
+  },
   "devDependencies": {
     "eslint": "^7.29.0",
     "eslint-config-airbnb-base": "^14.2.1",
