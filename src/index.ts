@@ -1,6 +1,6 @@
 import { ApolloServer } from "apollo-server";
-import typeDefs from "./typeDefs";
-import resolvers from "./resolvers";
+import typeDefs from "./graph-ql/typeDefs";
+import resolvers from "./graph-ql/resolvers";
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
