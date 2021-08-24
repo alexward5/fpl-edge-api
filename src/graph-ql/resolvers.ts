@@ -1,17 +1,15 @@
-const players = [
-  {
-    id: 1,
-    name: "Mo Salah",
-  },
-  {
-    id: 2,
-    name: "Harold Kane",
-  },
-];
+import pool from "../pg";
 
 const resolvers = {
   Query: {
-    players: () => players,
+    players: async () => {
+      const { rows } = await pool.query(`
+        SELECT * FROM "2020-21".player_metadata
+        WHERE first_name = 'David'
+      `);
+
+      return rows;
+    },
   },
 };
 

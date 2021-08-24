@@ -3,7 +3,8 @@ import { gql } from "apollo-server";
 const typeDefs = gql`
   type Player {
     id: Int
-    name: String
+    first_name: String
+    second_name: String
   }
 
   type Query {
