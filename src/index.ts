@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { ApolloServer } from "apollo-server";
 import typeDefs from "./graph-ql/typeDefs";
 import resolvers from "./graph-ql/resolvers";
