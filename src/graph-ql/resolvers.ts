@@ -22,6 +22,15 @@ const resolvers = {
 
       return rows[0];
     },
+    player_gameweek_data: async (parent: Player) => {
+      const { rows } = await pool.query(`
+        SELECT *
+        FROM "2020-21".player_gameweek_data
+        WHERE element = ${parent.id}
+      `);
+
+      return rows;
+    },
   },
 };
 
