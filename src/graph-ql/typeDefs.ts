@@ -1,7 +1,7 @@
 import { gql } from "apollo-server";
 
 const typeDefs = gql`
-  type PlayerTotals {
+  type PlayerSeasonTotals {
     goals_scored: Int!
     assists: Int!
     total_points: Int!
@@ -25,7 +25,7 @@ const typeDefs = gql`
     id: Int!
     first_name: String!
     second_name: String!
-    player_totals: PlayerTotals!
+    player_season_totals: PlayerSeasonTotals!
   }
 
   type Query {

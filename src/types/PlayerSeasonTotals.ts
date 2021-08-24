@@ -1,4 +1,4 @@
-interface PlayerTotals {
+interface PlayerSeasonTotals {
   goals_scored: number;
   assists: number;
   total_points: number;
@@ -18,4 +18,4 @@ interface PlayerTotals {
   element_type: string;
 }
 
-export default PlayerTotals;
+export default PlayerSeasonTotals;

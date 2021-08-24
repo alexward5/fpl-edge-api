@@ -13,10 +13,10 @@ const resolvers = {
     },
   },
   Player: {
-    player_totals: async (parent: Player) => {
+    player_season_totals: async (parent: Player) => {
       const { rows } = await pool.query(`
         SELECT *
-        FROM "2020-21".player_totals
+        FROM "2020-21".player_season_totals
         WHERE id = ${parent.id}
       `);
 
