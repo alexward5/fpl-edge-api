@@ -22,11 +22,19 @@ const resolvers = {
 
       return rows[0];
     },
-    player_gameweek_data: async (parent: Player) => {
+    player_gameweek_data: async (
+      parent: Player,
+      {
+        gameweekStart,
+        gameweekEnd,
+      }: { gameweekStart: number; gameweekEnd: number }
+    ) => {
       const { rows } = await pool.query(`
         SELECT *
         FROM "2020-21".player_gameweek_data
         WHERE element = ${parent.id}
+        ${gameweekStart ? `AND round >= ${gameweekStart}` : ""}
+        ${gameweekEnd ? `AND round <= ${gameweekEnd}` : ""}
       `);
 
       return rows;

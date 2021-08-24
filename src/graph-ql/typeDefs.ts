@@ -58,7 +58,10 @@ const typeDefs = gql`
     first_name: String!
     second_name: String!
     player_season_totals: PlayerSeasonTotals!
-    player_gameweek_data: [PlayerGameweekData!]!
+    player_gameweek_data(
+      gameweekStart: Int
+      gameweekEnd: Int
+    ): [PlayerGameweekData!]!
   }
 
   type Query {
