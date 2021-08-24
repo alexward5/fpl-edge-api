@@ -4,6 +4,6 @@ import resolvers from "./resolvers";
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-server.listen().then(({ url }: { url: string }) => {
+server.listen().then(({ url }) => {
   console.log(`Server listening at ${url}`);
 });
