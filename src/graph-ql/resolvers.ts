@@ -7,7 +7,7 @@ const resolvers = {
       try {
         const { rows } = await pool.query(`
         SELECT * FROM "2020-21".player_metadata
-        ${ids ? `WHERE id IN (${ids.join(", ")})` : ""}
+        ${ids?.length ? `WHERE id IN (${ids.join(", ")})` : ""}
       `);
 
         return rows;
@@ -46,6 +46,7 @@ const resolvers = {
         WHERE element = ${parent.id}
         ${gameweekStart ? `AND round >= ${gameweekStart}` : ""}
         ${gameweekEnd ? `AND round <= ${gameweekEnd}` : ""}
+        ORDER BY round ASC
       `);
 
         return rows;
