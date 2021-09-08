@@ -1,12 +1,14 @@
 import pool from "../pg";
 import type Player from "../types/Player";
 
+const SCHEMA = "2020-21";
+
 const resolvers = {
   Query: {
     players: async (parent: undefined, { ids }: { ids: [number] }) => {
       try {
         const { rows } = await pool.query(`
-        SELECT * FROM "2020-21".player_metadata
+        SELECT * FROM "${SCHEMA}".player_metadata
         ${ids?.length ? `WHERE id IN (${ids.join(", ")})` : ""}
       `);
 
@@ -22,7 +24,7 @@ const resolvers = {
       try {
         const { rows } = await pool.query(`
         SELECT *
-        FROM "2020-21".player_season_totals
+        FROM "${SCHEMA}".player_season_totals
         WHERE id = ${parent.id}
       `);
 
@@ -42,7 +44,7 @@ const resolvers = {
       try {
         const { rows } = await pool.query(`
         SELECT *
-        FROM "2020-21".player_gameweek_data
+        FROM "${SCHEMA}".player_gameweek_data
         WHERE element = ${parent.id}
         ${gameweekStart ? `AND round >= ${gameweekStart}` : ""}
         ${gameweekEnd ? `AND round <= ${gameweekEnd}` : ""}
