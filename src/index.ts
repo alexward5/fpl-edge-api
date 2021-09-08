@@ -1,9 +1,7 @@
 require("dotenv").config();
-import { ApolloServer } from "apollo-server";
-import typeDefs from "./graph-ql/typeDefs";
-import resolvers from "./graph-ql/resolvers";
+import createServer from './apollo-server';
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = createServer();
 
 server.listen().then(({ url }) => {
   console.log(`Server listening at ${url}`);
