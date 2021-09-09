@@ -23,7 +23,6 @@
     "@types/jest": "^27.0.1",
     "@types/node": "^10.17.60",
     "@types/pg": "^8.6.1",
-    "apollo-server-testing": "^2.25.2",
     "babel-jest": "^27.1.1",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-base": "^14.2.1",
