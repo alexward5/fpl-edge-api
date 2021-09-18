@@ -30,13 +30,10 @@ const testCases = [
     },
   },
   {
-    id: "getPlayerSeasonTotals",
+    id: "getPlayersSeasonTotals",
     query: `
       query ($ids: [Int!]) {
         players (ids: $ids) {
-          id
-          first_name
-          second_name
           player_season_totals {
             goals_scored
             assists
@@ -55,6 +52,49 @@ const testCases = [
             selected_by_percent
             now_cost
             element_type
+          }
+        }
+      }
+    `,
+    variables: {
+      ids: [1, 2, 3],
+    },
+  },
+  {
+    id: "getPlayersGameweekData",
+    query: `
+      query ($ids: [Int!]) {
+        players (ids: $ids) {
+          player_gameweek_data {
+            position
+            xp
+            assists
+            bonus
+            bps
+            clean_sheets
+            fixture
+            goals_conceded
+            goals_scored
+            ict_index
+            influence
+            creativity
+            threat
+            kickoff_time
+            minutes
+            opponent_team
+            own_goals
+            penalties_missed
+            saves
+            penalties_saved
+            yellow_cards
+            red_cards
+            round
+            selected
+            team_a_score
+            team_h_score
+            total_points
+            value
+            was_home
           }
         }
       }
