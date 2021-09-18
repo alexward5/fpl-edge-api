@@ -1,6 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Players resolvers getPlayersById 1`] = `
+exports[`PlayerData resolvers getPlayerSeasonTotals 1`] = `
+Object {
+  "data": Object {
+    "players": Array [
+      Object {
+        "first_name": "Mesut",
+        "id": 1,
+        "player_season_totals": Object {
+          "assists": 0,
+          "bonus": 0,
+          "bps": 0,
+          "clean_sheets": 0,
+          "creativity": 0,
+          "element_type": "MID",
+          "goals_conceded": 0,
+          "goals_scored": 0,
+          "ict_index": 0,
+          "influence": 0,
+          "minutes": 0,
+          "now_cost": 67,
+          "red_cards": 0,
+          "selected_by_percent": 0.5,
+          "threat": 0,
+          "total_points": 0,
+          "yellow_cards": 0,
+        },
+        "second_name": "Özil",
+      },
+      Object {
+        "first_name": "Sokratis",
+        "id": 2,
+        "player_season_totals": Object {
+          "assists": 0,
+          "bonus": 0,
+          "bps": 0,
+          "clean_sheets": 0,
+          "creativity": 0,
+          "element_type": "DEF",
+          "goals_conceded": 0,
+          "goals_scored": 0,
+          "ict_index": 0,
+          "influence": 0,
+          "minutes": 0,
+          "now_cost": 48,
+          "red_cards": 0,
+          "selected_by_percent": 0.1,
+          "threat": 0,
+          "total_points": 0,
+          "yellow_cards": 0,
+        },
+        "second_name": "Papastathopoulos",
+      },
+      Object {
+        "first_name": "David",
+        "id": 3,
+        "player_season_totals": Object {
+          "assists": 0,
+          "bonus": 0,
+          "bps": 230,
+          "clean_sheets": 3,
+          "creativity": 46.7,
+          "element_type": "DEF",
+          "goals_conceded": 20,
+          "goals_scored": 1,
+          "ict_index": 43.9,
+          "influence": 250.6,
+          "minutes": 1396,
+          "now_cost": 54,
+          "red_cards": 1,
+          "selected_by_percent": 0.8,
+          "threat": 144,
+          "total_points": 41,
+          "yellow_cards": 1,
+        },
+        "second_name": "Luiz Moreira Marinho",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`PlayerData resolvers getPlayersById 1`] = `
 Object {
   "data": Object {
     "players": Array [
@@ -31,7 +119,7 @@ Object {
 }
 `;
 
-exports[`Players resolvers getPlayersMetadata 1`] = `
+exports[`PlayerData resolvers getPlayersMetadata 1`] = `
 Object {
   "data": Object {
     "players": Array [
