@@ -18,7 +18,7 @@ Once you have a .env created with the necessary information for your database, o
 
 ## Testing the database connection
 
-In order to test that the API is connecting to your database, and that the proper data is being returned run `npm test` from your terminal. This will trigger a series of integration tests which query the database, and then compare the data returned from the GraphQL resolver functions with the existing snapshots found in ./src/testing/\_snapshots\_. If the tests run without any errors, the database connection is working and the API is returning data as expected.
+In order to test that the API is connecting to your database, and that the proper data is being returned run `npm test` from your terminal. This will trigger a series of integration tests which query the database, and then compare the data returned from the GraphQL resolver functions with the existing snapshots found in `./src/testing/\_snapshots\_`. If the tests run without any errors, the database connection is working and the API is returning data as expected.
 
 ## Running the API in development mode
 
@@ -26,4 +26,4 @@ In order to run the API locally run `npm run dev` from your terminal. This will 
 
 ## Building and running for deployment
 
-Run `npm start` from the terminal. This will transpile the TypeScript code to the ./dist directory and start the API from the ./dist/src/index.js file.
+Run `npm start` from the terminal. This will transpile the TypeScript code to the .`/dist` directory and start the API from the `./dist/src/index.js` file.
