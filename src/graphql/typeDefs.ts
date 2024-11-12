@@ -1,6 +1,4 @@
-import { gql } from "apollo-server";
-
-const typeDefs = gql`
+const typeDefs = `#graphql
   type PlayerSeasonTotals {
     goals_scored: Int!
     assists: Int!
