@@ -1,34 +1,42 @@
 const typeDefs = `#graphql
     type PlayerGameweekData {
-        position: String!
-        xp: Float!
         assists: Int!
-        bonus: Int!
-        bps: Int!
-        clean_sheets: Int!
-        fixture: Int!
-        goals_conceded: Int!
-        goals_scored: Int!
-        ict_index: Float!
-        influence: Float!
-        creativity: Float!
-        threat: Float!
-        kickoff_time: String!
+        blocks: Int!
+        cards_red: Int!
+        cards_yellow: Int!
+        carries: Int!
+        comp: String!
+        date: String!
+        dayofweek: String!
+        fbref_player_id: String!
+        game_started: Int!
+        gca: Int!
+        goals: Int!
+        interceptions: Int!
         minutes: Int!
-        opponent_team: Int!
-        own_goals: Int!
-        penalties_missed: Int!
-        saves: Int!
-        penalties_saved: Int!
-        yellow_cards: Int!
-        red_cards: Int!
-        round: Int!
-        selected: Int!
-        team_a_score: String
-        team_h_score: String!
-        total_points: Int!
-        value: Int!
-        was_home: Boolean!
+        npxg: Float!
+        opponent: String!
+        passes: Int!
+        passes_completed: Int!
+        passes_pct: Float!
+        pens_att: Int!
+        pens_made: Int!
+        position: Int!
+        progressive_carries: Int!
+        progressive_passes: Int!
+        result: String!
+        round: String!
+        sca: Int!
+        shots: Int!
+        shots_on_target: Int!
+        tackles: Int!
+        take_ons: Int!
+        take_ons_won: Int!
+        team: String!
+        touches: Int!
+        venue: String!
+        xg: Float!
+        xg_assist: Float!
     }
 
     type Player {
@@ -37,7 +45,7 @@ const typeDefs = `#graphql
         fbref_name: String!
         fbref_npxg: Float!
         fbref_npxg_xg_assist: Float!
-        fbref_player_row_id: String!
+        fbref_player_id: String!
         fbref_progressive_carries: Int!
         fbref_progressive_passes: Int!
         fbref_progressive_passes_received: Int!
@@ -55,7 +63,7 @@ const typeDefs = `#graphql
         fpl_player_code: Int!
         fpl_player_cost: Float!
         fpl_player_position: String!
-        fpl_player_row_id: String!
+        fpl_player_id: String!
         fpl_selected_by_percent: Float!
         fpl_total_points: Int!
         player_gameweek_data(

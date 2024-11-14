@@ -6,9 +6,11 @@ const SCHEMA = "test_schema";
 const resolvers = {
     Query: {
         players: async (parent: undefined) => {
-            const { rows } = await pool.query(`
+            const query = `
                 SELECT * FROM "${SCHEMA}".v_player_data
-            `);
+            `;
+
+            const { rows } = await pool.query(query);
 
             return rows;
         },
@@ -21,14 +23,16 @@ const resolvers = {
                 gameweekEnd,
             }: { gameweekStart: number; gameweekEnd: number }
         ) => {
-            const { rows } = await pool.query(`
+            const query = `
                 SELECT *
-                FROM "${SCHEMA}".player_gameweek_data
-                WHERE element = ${parent.id}
+                FROM "${SCHEMA}".fbref_player_matchlog
+                WHERE fbref_player_id = '${parent.fbref_player_id}'
                 ${gameweekStart ? `AND round >= ${gameweekStart}` : ""}
                 ${gameweekEnd ? `AND round <= ${gameweekEnd}` : ""}
                 ORDER BY round ASC
-            `);
+            `;
+
+            const { rows } = await pool.query(query);
 
             return rows;
         },
