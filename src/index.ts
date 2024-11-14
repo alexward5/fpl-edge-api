@@ -5,5 +5,5 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 const server = createServer();
 
 startStandaloneServer(server).then(({ url }: { url: string }) => {
-  console.log(`Server listening at ${url}`);
+    console.log(`Server listening at ${url}`);
 });
