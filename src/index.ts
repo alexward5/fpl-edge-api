@@ -1,6 +1,6 @@
 require("dotenv").config();
 import createServer from "./apollo-server";
-import { startStandaloneServer } from '@apollo/server/standalone';
+import { startStandaloneServer } from "@apollo/server/standalone";
 
 const server = createServer();
 

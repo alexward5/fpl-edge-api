@@ -29,7 +29,7 @@ const resolvers = {
       {
         gameweekStart,
         gameweekEnd,
-      }: { gameweekStart: number; gameweekEnd: number }
+      }: { gameweekStart: number; gameweekEnd: number },
     ) => {
       const { rows } = await pool.query(`
         SELECT *
