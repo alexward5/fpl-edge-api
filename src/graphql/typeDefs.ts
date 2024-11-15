@@ -25,7 +25,7 @@ const typeDefs = `#graphql
         progressive_carries: Int!
         progressive_passes: Int!
         result: String!
-        round: String!
+        round: Int!
         sca: Int!
         shots: Int!
         shots_on_target: Int!
@@ -41,7 +41,7 @@ const typeDefs = `#graphql
 
     type Player {
         calc_fpl_npxp: Float!
-        fbref_age: String!
+        fbref_age: Int!
         fbref_name: String!
         fbref_npxg: Float!
         fbref_npxg_xg_assist: Float!
