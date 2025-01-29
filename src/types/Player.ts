@@ -1,12 +1,14 @@
-import type PlayerSeasonTotals from "./PlayerSeasonTotals";
 import type PlayerGameweekData from "./PlayerGameweekData";
 
 interface Player {
-    fbref_player_id: string;
-    first_name: string;
-    second_name: string;
-    player_season_totals?: PlayerSeasonTotals;
-    player_gameweek_data?: PlayerGameweekData;
+    fpl_player_id: string;
+    fpl_player_code: string;
+    fpl_web_name: string;
+    fbref_team: string;
+    fpl_player_position: string;
+    fpl_player_cost: number;
+    fpl_selected_by_percent: number;
+    player_gameweek_data: PlayerGameweekData[];
 }
 
 export default Player;

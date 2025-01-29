@@ -5,7 +5,7 @@ const SCHEMA = "test_schema";
 
 const resolvers = {
     Query: {
-        players: async (parent: undefined) => {
+        players: async () => {
             const query = `
                 SELECT * FROM "${SCHEMA}".v_player_data
             `;
@@ -25,8 +25,8 @@ const resolvers = {
         ) => {
             const query = `
                 SELECT *
-                FROM "${SCHEMA}".fbref_player_matchlog
-                WHERE fbref_player_id = '${parent.fbref_player_id}'
+                FROM "${SCHEMA}".v_player_matchlog
+                WHERE fpl_player_id = '${parent.fpl_player_id}'
                 ${gameweekStart ? `AND round >= ${gameweekStart}` : ""}
                 ${gameweekEnd ? `AND round <= ${gameweekEnd}` : ""}
                 ORDER BY round ASC
