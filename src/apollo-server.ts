@@ -3,7 +3,7 @@ import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers";
 
 const createServer = () => {
-  return new ApolloServer({ typeDefs, resolvers });
+    return new ApolloServer({ typeDefs, resolvers });
 };
 
 export default createServer;
