@@ -27,9 +27,9 @@ const resolvers = {
                 SELECT *
                 FROM "${SCHEMA}".v_player_matchlog
                 WHERE fpl_player_id = '${parent.fpl_player_id}'
-                ${gameweekStart ? `AND round >= ${gameweekStart}` : ""}
-                ${gameweekEnd ? `AND round <= ${gameweekEnd}` : ""}
-                ORDER BY round ASC
+                ${gameweekStart ? `AND fbref_round >= ${gameweekStart}` : ""}
+                ${gameweekEnd ? `AND fbref_round <= ${gameweekEnd}` : ""}
+                ORDER BY fbref_round ASC
             `;
 
             const { rows } = await pool.query(query);

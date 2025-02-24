@@ -1,7 +1,7 @@
 const typeDefs = `#graphql
     type PlayerGameweekData {
-        round: Int!
-        minutes: Int!
+        fbref_round: Int!
+        fbref_minutes: Int!
         fbref_npxg: Float!
         fbref_xg_assist: Float!
         calc_fpl_npxp: Float!
