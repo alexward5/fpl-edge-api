@@ -22,48 +22,36 @@ const resolvers = {
 
             const { rows } = await pool.query(query);
 
-            const returnedRows: Team[] = [];
+            const teamMap = new Map<string, Team>();
 
             rows.forEach((row) => {
-                const teamIndex = returnedRows.findIndex(
-                    (r) => r.fbref_team === row.fbref_team
-                );
-                if (teamIndex === -1) {
-                    returnedRows.push({
+                if (!teamMap.has(row.fbref_team)) {
+                    teamMap.set(row.fbref_team, {
                         fbref_team: row.fbref_team,
-                        fbref_team_matchlog: [
-                            {
-                                fbref_match_date: row.fbref_date,
-                                fbref_round: row.fbref_round,
-                            },
-                        ],
-                    });
-                } else {
-                    returnedRows[teamIndex].fbref_team_matchlog.push({
-                        fbref_match_date: row.fbref_date,
-                        fbref_round: row.fbref_round,
+                        fbref_team_matchlog: [],
                     });
                 }
+
+                const team = teamMap.get(row.fbref_team)!;
+                team.fbref_team_matchlog.push({
+                    fbref_match_date: row.fbref_date,
+                    fbref_round: row.fbref_round,
+                });
             });
 
-            returnedRows.forEach((team) => {
-                team.fbref_team_matchlog = team.fbref_team_matchlog.sort(
-                    (a, b) => {
-                        return (
-                            new Date(a.fbref_match_date).getTime() -
-                            new Date(b.fbref_match_date).getTime()
-                        );
-                    }
+            teamMap.forEach((team) => {
+                team.fbref_team_matchlog.sort(
+                    (a, b) =>
+                        new Date(a.fbref_match_date).getTime() -
+                        new Date(b.fbref_match_date).getTime()
                 );
-            });
 
-            returnedRows.forEach((team) => {
-                team.fbref_team_matchlog.forEach((matchlog, index: number) => {
+                team.fbref_team_matchlog.forEach((matchlog, index) => {
                     matchlog.match_number = index + 1;
                 });
             });
 
-            return returnedRows;
+            return Array.from(teamMap.values());
         },
     },
     Player: {
