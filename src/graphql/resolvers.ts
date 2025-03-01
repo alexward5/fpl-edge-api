@@ -1,6 +1,6 @@
 import pool from "../pg";
 import type Player from "../types/Player";
-// import type Team from "../types/Team";
+import type Team from "../types/Team";
 
 const SCHEMA = "test_schema";
 
@@ -22,11 +22,11 @@ const resolvers = {
 
             const { rows } = await pool.query(query);
 
-            const returnedRows: any = [];
+            const returnedRows: Team[] = [];
 
             rows.forEach((row) => {
                 const teamIndex = returnedRows.findIndex(
-                    (r: any) => r.fbref_team === row.fbref_team
+                    (r) => r.fbref_team === row.fbref_team
                 );
                 if (teamIndex === -1) {
                     returnedRows.push({
@@ -46,9 +46,9 @@ const resolvers = {
                 }
             });
 
-            returnedRows.forEach((team: any) => {
+            returnedRows.forEach((team) => {
                 team.fbref_team_matchlog = team.fbref_team_matchlog.sort(
-                    (a: any, b: any) => {
+                    (a, b) => {
                         return (
                             new Date(a.fbref_match_date).getTime() -
                             new Date(b.fbref_match_date).getTime()
@@ -57,12 +57,10 @@ const resolvers = {
                 );
             });
 
-            returnedRows.forEach((team: any) => {
-                team.fbref_team_matchlog.forEach(
-                    (matchlog: any, index: number) => {
-                        matchlog.match_number = index + 1;
-                    }
-                );
+            returnedRows.forEach((team) => {
+                team.fbref_team_matchlog.forEach((matchlog, index: number) => {
+                    matchlog.match_number = index + 1;
+                });
             });
 
             return returnedRows;
