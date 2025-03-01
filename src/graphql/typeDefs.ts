@@ -21,8 +21,20 @@ const typeDefs = `#graphql
         ): [PlayerGameweekData!]!
     }
 
+    type TeamMatchlog {
+        fbref_match_date: String!
+        fbref_round: Int!
+        match_number: Int!
+    }
+
+    type Team {
+        fbref_team: String!
+        fbref_team_matchlog: [TeamMatchlog!]!
+    }
+
     type Query {
         players(ids: [Int!]): [Player]!
+        teams(ids: [Int!]): [Team]!
     }
 `;
 
