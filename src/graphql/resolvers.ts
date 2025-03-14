@@ -6,19 +6,29 @@ const SCHEMA = "test_schema";
 
 const resolvers = {
     Query: {
-        players: async () => {
-            const query = `
+        players: async (parent: Player, { ids }: { ids: string[] }) => {
+            let query = `
                 SELECT * FROM "${SCHEMA}".v_player_data
             `;
+
+            if (ids?.length) {
+                query += ` WHERE fpl_player_id IN ('${ids.join("','")}')`;
+            }
+
+            console.log(query);
 
             const { rows } = await pool.query(query);
 
             return rows;
         },
-        teams: async () => {
-            const query = `
+        teams: async (parent: Team, { teamNames }: { teamNames: string[] }) => {
+            let query = `
                 SELECT * FROM "${SCHEMA}".v_team_matchlog
             `;
+
+            if (teamNames?.length) {
+                query += ` WHERE fbref_team IN ('${teamNames.join("','")}')`;
+            }
 
             const { rows } = await pool.query(query);
 
@@ -81,18 +91,6 @@ const resolvers = {
             return rows;
         },
     },
-    // Team: {
-    //     teams: async () => {
-    //         const query = `
-    //             SELECT * FROM "${SCHEMA}".fbref_team_scores_and_fixtures
-    //             WHERE result IS NOT NULL AND result <> '';
-    //         `;
-
-    //         const { rows } = await pool.query(query);
-
-    //         return rows;
-    //     },
-    // },
 };
 
 export default resolvers;
