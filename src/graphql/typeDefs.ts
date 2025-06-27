@@ -33,8 +33,8 @@ const typeDefs = `#graphql
     }
 
     type Query {
-        players(ids: [String!]): [Player]!
-        teams(teamNames: [String!]): [Team]!
+        players(ids: [String!]): [Player!]!
+        teams(teamNames: [String!]): [Team!]!
     }
 `;
 
