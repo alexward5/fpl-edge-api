@@ -11,6 +11,7 @@
     "author": "Alexander Ward",
     "license": "ISC",
     "dependencies": {
+        "@apollo/client": "^3.12.8",
         "@apollo/server": "^4.11.2",
         "@babel/runtime": "^7.26.0",
         "dotenv": "^16.4.5",
