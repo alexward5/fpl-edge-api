@@ -15,8 +15,6 @@ const resolvers = {
                 query += ` WHERE fpl_player_id IN ('${ids.join("','")}')`;
             }
 
-            console.log(query);
-
             const { rows } = await pool.query(query);
 
             return rows;
