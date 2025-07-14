@@ -5,6 +5,7 @@ const typeDefs = `#graphql
         fbref_npxg: Float!
         fbref_xg_assist: Float!
         calc_fpl_npxp: Float!
+        fpl_gameweek: Int!
     }
 
     type Player {
