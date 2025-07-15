@@ -33,9 +33,16 @@ const typeDefs = `#graphql
         fbref_team_matchlog: [TeamMatchlog!]!
     }
 
+    type Events {
+        id: Int!
+        finished: Boolean!
+        is_current: Boolean!
+    }
+
     type Query {
         players(ids: [String!]): [Player!]!
         teams(teamNames: [String!]): [Team!]!
+        events: [Events!]!
     }
 `;
 

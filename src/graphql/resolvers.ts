@@ -6,7 +6,7 @@ const SCHEMA = "test_schema";
 
 const resolvers = {
     Query: {
-        players: async (parent: Player, { ids }: { ids: string[] }) => {
+        players: async (_: unknown, { ids }: { ids: string[] }) => {
             let query = `
                 SELECT * FROM "${SCHEMA}".v_player_data
             `;
@@ -19,7 +19,7 @@ const resolvers = {
 
             return rows;
         },
-        teams: async (parent: Team, { teamNames }: { teamNames: string[] }) => {
+        teams: async (_: unknown, { teamNames }: { teamNames: string[] }) => {
             let query = `
                 SELECT * FROM "${SCHEMA}".v_team_matchlog
             `;
@@ -65,6 +65,15 @@ const resolvers = {
             });
 
             return Array.from(teamMap.values());
+        },
+        events: async () => {
+            const query = `
+                SELECT * FROM "${SCHEMA}".fpl_events
+            `;
+
+            const { rows } = await pool.query(query);
+
+            return rows;
         },
     },
     Player: {
