@@ -6,6 +6,11 @@ const typeDefs = `#graphql
         fbref_xg_assist: Float!
         calc_fpl_npxp: Float!
         fpl_gameweek: Int!
+        fpl_total_points: Int!
+        fpl_goals_scored: Int!
+        fpl_assists: Int!
+        fpl_bps: Int!
+        fpl_clean_sheet: Int!
     }
 
     type Player {
