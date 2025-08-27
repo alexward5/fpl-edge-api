@@ -2,7 +2,7 @@ import pool from "../pg";
 import type Player from "../types/Player";
 import type Team from "../types/Team";
 
-const SCHEMA = "test_schema";
+const SCHEMA = "test_schema_2025";
 
 const resolvers = {
     Query: {
