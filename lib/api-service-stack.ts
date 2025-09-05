@@ -103,6 +103,18 @@ export class ApiServiceStack extends cdk.Stack {
             memoryLimitMiB: props.memoryMiB ?? 512,
         });
 
+        taskDef.addToTaskRolePolicy(
+            new iam.PolicyStatement({
+                actions: [
+                    "ssmmessages:CreateControlChannel",
+                    "ssmmessages:CreateDataChannel",
+                    "ssmmessages:OpenControlChannel",
+                    "ssmmessages:OpenDataChannel",
+                ],
+                resources: ["*"],
+            })
+        );
+
         taskDef
             .obtainExecutionRole()
             .addManagedPolicy(
@@ -155,6 +167,7 @@ export class ApiServiceStack extends cdk.Stack {
             securityGroups: [taskSg],
             vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS },
             circuitBreaker: { rollback: true },
+            enableExecuteCommand: true,
         });
 
         const scaling = service.autoScaleTaskCount({
