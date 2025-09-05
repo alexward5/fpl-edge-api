@@ -8,6 +8,10 @@ import {
     aws_iam as iam,
     aws_logs as logs,
     aws_secretsmanager as secrets,
+    aws_cloudwatch as cw,
+    aws_cloudwatch_actions as cw_actions,
+    aws_sns as sns,
+    aws_sns_subscriptions as subs,
 } from "aws-cdk-lib";
 
 type Props = cdk.StackProps & {
@@ -177,7 +181,7 @@ export class ApiServiceStack extends cdk.Stack {
         });
 
         scaling.scaleOnCpuUtilization("CpuScaling", {
-            targetUtilizationPercent: 70, // Aim to keep avg CPU ~60%
+            targetUtilizationPercent: 70, // Aim to keep avg CPU ~70%
             scaleOutCooldown: cdk.Duration.seconds(60),
             scaleInCooldown: cdk.Duration.seconds(120),
         });
@@ -253,6 +257,92 @@ export class ApiServiceStack extends cdk.Stack {
             ec2.Port.tcp(5432),
             "ECS tasks to RDS 5432"
         );
+
+        const alarmTopic = new sns.Topic(this, "OpsAlarmsTopic", {
+            displayName: "VersoStat API Alarms",
+        });
+
+        const alarmEmail = process.env.ALARM_EMAIL;
+        if (alarmEmail) {
+            alarmTopic.addSubscription(new subs.EmailSubscription(alarmEmail));
+        }
+
+        const albFullName = cdk.Fn.importValue("VersoStat-AlbFullName");
+
+        // ALB 5XX (load balancer–generated) spike alarm
+        const alb5xxAlarm = new cw.Alarm(this, "Alb5xxSpike", {
+            alarmDescription: "ALB is returning 5XX errors (spike)",
+            metric: new cw.Metric({
+                namespace: "AWS/ApplicationELB",
+                metricName: "HTTPCode_ELB_5XX_Count",
+                dimensionsMap: { LoadBalancer: albFullName },
+                statistic: "Sum",
+                period: cdk.Duration.minutes(1),
+            }),
+            threshold: 5, // ≥5 5xx in a minute
+            evaluationPeriods: 3, // for 3 consecutive minutes
+            datapointsToAlarm: 2, // 2 out of 3 to reduce noise
+            treatMissingData: cw.TreatMissingData.NOT_BREACHING,
+        });
+        alb5xxAlarm.addAlarmAction(new cw_actions.SnsAction(alarmTopic));
+
+        const tgFullName = tg.targetGroupFullName;
+
+        // ALB target group UnhealthyHostCount > 0 (for 5 minutes)
+        const unhealthyHostsAlarm = new cw.Alarm(this, "AlbUnhealthyHosts", {
+            alarmDescription:
+                "ALB target group has 1+ unhealthy targets for 5 minutes",
+            metric: new cw.Metric({
+                namespace: "AWS/ApplicationELB",
+                metricName: "UnHealthyHostCount",
+                dimensionsMap: {
+                    LoadBalancer: albFullName,
+                    TargetGroup: tgFullName,
+                },
+                statistic: "Average",
+                period: cdk.Duration.minutes(1),
+            }),
+            threshold: 1,
+            evaluationPeriods: 5, // 5 consecutive minutes
+            datapointsToAlarm: 5,
+            treatMissingData: cw.TreatMissingData.NOT_BREACHING,
+        });
+        unhealthyHostsAlarm.addAlarmAction(
+            new cw_actions.SnsAction(alarmTopic)
+        );
+
+        // ECS CPU >= 85% for 5 consecutive minutes
+        const ecsHighCpu = new cw.Alarm(this, "EcsHighCpu", {
+            alarmDescription: "ECS service CPU >= 85% for 5 minutes",
+            metric: service.metricCpuUtilization({
+                period: cdk.Duration.minutes(1),
+                statistic: "Average",
+            }),
+            threshold: 85,
+            evaluationPeriods: 5,
+            datapointsToAlarm: 5,
+            treatMissingData: cw.TreatMissingData.NOT_BREACHING,
+        });
+        ecsHighCpu.addAlarmAction(new cw_actions.SnsAction(alarmTopic));
+
+        // ECS Memory >= 85% for 5 consecutive minutes
+        const ecsHighMem = new cw.Alarm(this, "EcsHighMem", {
+            alarmDescription: "ECS service Memory >= 85% for 5 minutes",
+            metric: service.metricMemoryUtilization({
+                period: cdk.Duration.minutes(1),
+                statistic: "Average",
+            }),
+            threshold: 85,
+            evaluationPeriods: 5,
+            datapointsToAlarm: 5,
+            treatMissingData: cw.TreatMissingData.NOT_BREACHING,
+        });
+        ecsHighMem.addAlarmAction(new cw_actions.SnsAction(alarmTopic));
+
+        new cdk.CfnOutput(this, "OpsAlarmsTopicArn", {
+            value: alarmTopic.topicArn,
+            exportName: "VersoStat-OpsAlarmsTopicArn",
+        });
 
         new cdk.CfnOutput(this, "ServiceName", { value: service.serviceName });
     }
