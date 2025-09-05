@@ -168,15 +168,22 @@ export class ApiServiceStack extends cdk.Stack {
             vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS },
             circuitBreaker: { rollback: true },
             enableExecuteCommand: true,
+            healthCheckGracePeriod: cdk.Duration.seconds(60),
         });
 
         const scaling = service.autoScaleTaskCount({
             minCapacity: 1,
-            maxCapacity: 4,
+            maxCapacity: 2,
         });
 
         scaling.scaleOnCpuUtilization("CpuScaling", {
-            targetUtilizationPercent: 60, // Aim to keep avg CPU ~60%
+            targetUtilizationPercent: 70, // Aim to keep avg CPU ~60%
+            scaleOutCooldown: cdk.Duration.seconds(60),
+            scaleInCooldown: cdk.Duration.seconds(120),
+        });
+
+        scaling.scaleOnMemoryUtilization("MemScaling", {
+            targetUtilizationPercent: 70,
             scaleOutCooldown: cdk.Duration.seconds(60),
             scaleInCooldown: cdk.Duration.seconds(120),
         });
@@ -220,8 +227,13 @@ export class ApiServiceStack extends cdk.Stack {
             healthCheck: {
                 path: "/health",
                 healthyHttpCodes: "200-399",
+                interval: cdk.Duration.seconds(15),
+                timeout: cdk.Duration.seconds(5),
+                healthyThresholdCount: 2,
+                unhealthyThresholdCount: 3,
                 port: "traffic-port",
             },
+            deregistrationDelay: cdk.Duration.seconds(10),
         });
 
         // Attach the ECS service to the TG explicitly
