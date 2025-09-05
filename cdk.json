@@ -1,0 +1,7 @@
+{
+    "app": "npx ts-node --project tsconfig.json bin/api-service-app.ts",
+    "context": {
+        "@aws-cdk/aws-ec2:ipv4IgnoreEgressRule": "true",
+        "@aws-cdk/aws-ecs:minHealthyPercent": "true"
+    }
+}

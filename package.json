@@ -6,26 +6,34 @@
     "scripts": {
         "test": "jest --watch",
         "dev": "ts-node-dev --respawn ./src/index.ts",
-        "start": "tsc && node ./dist/src/index.js"
+        "build": "tsc",
+        "start": "node ./dist/index.js",
+        "deploy:api": "./deploy_api.sh"
     },
     "author": "Alexander Ward",
     "license": "ISC",
     "dependencies": {
         "@apollo/client": "^3.12.8",
-        "@apollo/server": "^4.11.2",
+        "@apollo/server": "^4.12.2",
         "@babel/runtime": "^7.26.0",
+        "aws-cdk-lib": "^2.208.0",
+        "constructs": "^10.0.0",
+        "cors": "^2.8.5",
         "dotenv": "^16.4.5",
+        "express": "^4.21.2",
         "graphql": "^16.9.0",
         "pg": "^8.13.1",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.6.3"
+        "ts-node": "^10.9.2"
     },
     "devDependencies": {
         "@babel/plugin-transform-runtime": "^7.25.9",
         "@babel/preset-env": "^7.26.0",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^4.17.21",
         "@types/jest": "^29.5.14",
-        "@types/node": "^22.9.0",
+        "@types/node": "^22.18.0",
         "@types/pg": "^8.11.10",
+        "aws-cdk": "^2.1027.0",
         "babel-jest": "^29.7.0",
         "eslint": "^9.14.0",
         "eslint-config-prettier": "^9.1.0",
@@ -33,6 +41,7 @@
         "jest": "^29.7.0",
         "ts-jest": "^29.2.5",
         "ts-node-dev": "^2.0.0",
-        "tslib": "^2.8.1"
+        "tslib": "^2.8.1",
+        "typescript": "^5.9.2"
     }
 }
