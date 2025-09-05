@@ -8,7 +8,8 @@
         "dev": "ts-node-dev --respawn ./src/index.ts",
         "build": "tsc",
         "start": "node ./dist/index.js",
-        "deploy:api": "./deploy_api.sh"
+        "deploy:api": "./deploy_api.sh",
+        "deploy:infra": "cdk deploy VersoStat-ApiServiceStack-prod --require-approval never"
     },
     "author": "Alexander Ward",
     "license": "ISC",

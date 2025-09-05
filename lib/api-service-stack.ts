@@ -157,6 +157,17 @@ export class ApiServiceStack extends cdk.Stack {
             circuitBreaker: { rollback: true },
         });
 
+        const scaling = service.autoScaleTaskCount({
+            minCapacity: 1,
+            maxCapacity: 4,
+        });
+
+        scaling.scaleOnCpuUtilization("CpuScaling", {
+            targetUtilizationPercent: 60, // Aim to keep avg CPU ~60%
+            scaleOutCooldown: cdk.Duration.seconds(60),
+            scaleInCooldown: cdk.Duration.seconds(120),
+        });
+
         // Prefer SPOT with on-demand fallback
         const cfnSvc = service.node.defaultChild as ecs.CfnService;
         cfnSvc.launchType = undefined;
